@@ -58,7 +58,7 @@ The project is under **active development**, with authentication fully implement
 - JWT token-based auth
 - Environment-based secrets
 - Route-level protection
-- MVC separation of concerns
+- MVC separation of concerns of seats
 
 ---
 
