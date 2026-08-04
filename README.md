@@ -4,7 +4,7 @@
 
 A full-stack, production-oriented **Movie Reservation System** built with **Node.js, Express.js, TypeScript, PostgreSQL, Prisma ORM, and JWT Authentication**.
 
-Designed with a scalable **MVC architecture** and secure coding practices, this project lets users browse movies, manage bookings, and (soon) reserve seats in real time — with an admin layer for full control over content and shows.
+Designed with a scalable **MVC architecture** and secure coding practices, this project lets users browse movies, manage bookings or seats , and (soon) reserve seats in real time — with an admin layer for full control over content and shows.
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
