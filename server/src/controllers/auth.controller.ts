@@ -47,5 +47,19 @@ async profile(req: Request, res: Response) {
   });
 }
 
+async me(req: Request, res: Response) {
+  return res.status(200).json({
+    success: true,
+    data: req.user,
+  });
+}
+
+async adminOnly(req: Request, res: Response) {
+  return res.status(200).json({
+    success: true,
+    message: "Welcome Admin",
+  });
+}
+
 }
 

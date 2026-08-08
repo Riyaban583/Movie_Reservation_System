@@ -15,6 +15,8 @@ export const authenticate = (
     });
   }
 
+  console.log("HEADERS:", req.headers);
+
   const token = authHeader.split(" ")[1];
 
   if (!token) {
@@ -25,15 +27,17 @@ export const authenticate = (
   }
 
   try {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET as string
-    );
 
-    console.log(decoded);
+  const decoded = jwt.verify(
+    token,
+    process.env.JWT_SECRET as string
+  );
 
-    next();
-  } catch (error) {
+  req.user = decoded as any;
+
+  next();
+
+} catch (error) {
     return res.status(401).json({
       success: false,
       message: "Invalid or expired token",
