@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import { MovieService } from "../services/movie.service";
+import { createMovieSchema } from "../validations/movie.validation";
 
 const movieService = new MovieService();
 
 export class MovieController {
   async createMovie(req: Request, res: Response) {
     try {
+
+        createMovieSchema.parse(req.body);
       const movie = await movieService.createMovie({
         title: req.body.title,
         description: req.body.description,
@@ -20,11 +23,13 @@ export class MovieController {
         message: "Movie created successfully",
         data: movie,
       });
-    } catch (error) {
-      return res.status(500).json({
-        success: false,
-        message: "Failed to create movie",
-      });
-    }
+    } catch (error: any) {
+  console.error("MOVIE ERROR:", error);
+
+  return res.status(500).json({
+    success: false,
+    message: error.message,
+  });
+}
   }
 }
