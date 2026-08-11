@@ -13,4 +13,29 @@ router.post(
   (req, res) => movieController.createMovie(req, res)
 );
 
+// 👇 NEW ROUTE
+router.get(
+  "/",
+  (req, res) => movieController.getAllMovies(req, res)
+);
+
+router.get(
+  "/:id",
+  (req, res) => movieController.getMovieById(req, res)
+);
+
+router.put(
+  "/:id",
+  authenticate,
+  authorize("ADMIN"),
+  (req, res) => movieController.updateMovie(req, res)
+);
+
+router.delete(
+  "/:id",
+  authenticate,
+  authorize("ADMIN"),
+  (req, res) => movieController.deleteMovie(req, res)
+);
+
 export default router;
