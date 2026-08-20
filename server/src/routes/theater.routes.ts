@@ -13,4 +13,29 @@ router.post(
   (req, res) => theaterController.createTheater(req, res)
 );
 
+router.get(
+  "/",
+  (req, res) => theaterController.getAllTheaters(req, res)
+);
+
+router.get(
+  "/:id",
+  (req, res) => theaterController.getTheaterById(req, res)
+);
+
+router.put(
+  "/:id",
+  authenticate,
+  authorize("ADMIN"),
+  (req, res) => theaterController.updateTheater(req, res)
+);
+
+
+router.delete(
+  "/:id",
+  authenticate,
+  authorize("ADMIN"),
+  (req, res) => theaterController.deleteTheater(req, res)
+);
+
 export default router;
