@@ -16,4 +16,27 @@ export class ScreenService {
 
     return screen;
   }
+
+  async generateSeats(
+    screenId: string,
+    rows: number,
+    seatsPerRow: number
+  ) {
+    const seats = [];
+
+    for (let row = 0; row < rows; row++) {
+      const rowName = String.fromCharCode(65 + row);
+
+      for (let seat = 1; seat <= seatsPerRow; seat++) {
+        seats.push({
+          seatNumber: `${rowName}${seat}`,
+          screenId,
+        });
+      }
+    }
+
+    return prisma.seat.createMany({
+      data: seats,
+    });
+  }
 }

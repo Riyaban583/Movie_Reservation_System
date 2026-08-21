@@ -23,4 +23,25 @@ export class ScreenController {
       });
     }
   }
+
+  async generateSeats(req: Request, res: Response) {
+  try {
+    const result = await screenService.generateSeats(
+      req.params.screenId,
+      Number(req.body.rows),
+      Number(req.body.seatsPerRow)
+    );
+
+    return res.status(201).json({
+      success: true,
+      message: "Seats generated successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
 }

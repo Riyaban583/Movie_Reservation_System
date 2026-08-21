@@ -13,4 +13,11 @@ router.post(
   (req, res) => screenController.createScreen(req, res)
 );
 
+router.post(
+  "/:screenId/seats",
+  authenticate,
+  authorize("ADMIN"),
+  (req, res) => screenController.generateSeats(req, res)
+);
+
 export default router;
