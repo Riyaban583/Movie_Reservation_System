@@ -25,42 +25,56 @@ export class ScreenController {
   }
 
   async generateSeats(req: Request, res: Response) {
-  try {
-    const result = await screenService.generateSeats(
-      req.params.screenId,
-      Number(req.body.rows),
-      Number(req.body.seatsPerRow)
-    );
+    try {
+      const result = await screenService.generateSeats(
+        req.params.screenId,
+        Number(req.body.rows),
+        Number(req.body.seatsPerRow)
+      );
 
-    return res.status(201).json({
-      success: true,
-      message: "Seats generated successfully",
-      data: result,
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+      return res.status(201).json({
+        success: true,
+        message: "Seats generated successfully",
+        data: result,
+      });
+    } catch (error: any) {
+      const errorCode = error?.code;
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+
+      if (
+        errorCode === "P2002" ||
+        errorMessage.includes("Unique constraint failed")
+      ) {
+        return res.status(409).json({
+          success: false,
+          message: "Seat already exists for this screen",
+        });
+      }
+
+      return res.status(500).json({
+        success: false,
+        message: errorMessage || "Failed to generate seats",
+      });
+    }
   }
-}
 
-async getSeatsByScreen(req: Request, res: Response) {
-  try {
-    const seats = await screenService.getSeatsByScreen(
-      req.params.screenId
-    );
+  async getSeatsByScreen(req: Request, res: Response) {
+    try {
+      const seats = await screenService.getSeatsByScreen(
+        req.params.screenId
+      );
 
-    return res.status(200).json({
-      success: true,
-      count: seats.length,
-      data: seats,
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+      return res.status(200).json({
+        success: true,
+        count: seats.length,
+        data: seats,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
   }
-}
 }
