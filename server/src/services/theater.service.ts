@@ -4,7 +4,6 @@ interface CreateTheaterData {
   name: string;
   location: string;
   city: string;
-  screens: number;
 }
 
 export class TheaterService {
@@ -14,7 +13,6 @@ export class TheaterService {
         name: data.name,
         location: data.location,
         city: data.city,
-        screens: data.screens,
       },
     });
 
@@ -22,43 +20,46 @@ export class TheaterService {
   }
 
   async getAllTheaters() {
-  const theaters = await prisma.theater.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+    const theaters = await prisma.theater.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
-  return theaters;
-}
+    return theaters;
+  }
 
-async getTheaterById(id: string) {
-  const theater = await prisma.theater.findUnique({
-    where: {
-      id,
-    },
-  });
+  async getTheaterById(id: string) {
+    const theater = await prisma.theater.findUnique({
+      where: {
+        id,
+      },
+    });
 
-  return theater;
-}
+    return theater;
+  }
 
-async updateTheater(id: string, data: Partial<CreateTheaterData>) {
-  const theater = await prisma.theater.update({
-    where: {
-      id,
-    },
-    data,
-  });
+  async updateTheater(
+    id: string,
+    data: Partial<CreateTheaterData>
+  ) {
+    const theater = await prisma.theater.update({
+      where: {
+        id,
+      },
+      data,
+    });
 
-  return theater;
-}
+    return theater;
+  }
 
-async deleteTheater(id: string) {
-  const theater = await prisma.theater.delete({
-    where: {
-      id,
-    },
-  });
+  async deleteTheater(id: string) {
+    const theater = await prisma.theater.delete({
+      where: {
+        id,
+      },
+    });
 
-  return theater;
-}
+    return theater;
+  }
 }
