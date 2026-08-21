@@ -64,8 +64,10 @@ model Seat {
   seatNumber String
 
   screenId   String
-  screen    Screen   @relation(fields: [screenId], references: [id], onDelete: Cascade)
+  screen     Screen   @relation(fields: [screenId], references: [id], onDelete: Cascade)
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  @@unique([screenId, seatNumber])
 }
