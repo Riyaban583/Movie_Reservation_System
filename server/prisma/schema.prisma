@@ -39,7 +39,19 @@ model Theater {
   name      String
   location  String
   city      String
-  screens   Int
+
+  screens   Screen[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Screen {
+  id        String   @id @default(cuid())
+  name      String
+
+  theaterId String
+  theater   Theater  @relation(fields: [theaterId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
