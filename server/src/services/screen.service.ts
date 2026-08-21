@@ -39,4 +39,17 @@ export class ScreenService {
       data: seats,
     });
   }
+
+  async getSeatsByScreen(screenId: string) {
+  const seats = await prisma.seat.findMany({
+    where: {
+      screenId,
+    },
+    orderBy: {
+      seatNumber: "asc",
+    },
+  });
+
+  return seats;
+}
 }

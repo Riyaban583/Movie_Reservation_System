@@ -20,4 +20,9 @@ router.post(
   (req, res) => screenController.generateSeats(req, res)
 );
 
+router.get(
+  "/:screenId/seats",
+  (req, res) => screenController.getSeatsByScreen(req, res)
+);
+
 export default router;
