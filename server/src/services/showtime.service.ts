@@ -82,6 +82,45 @@ async updateShowtime(
   id: string,
   data: Partial<CreateShowtimeData>
 ) {
+  const currentShowtime = await prisma.showtime.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!currentShowtime) {
+    throw new Error("Showtime not found");
+  }
+
+  const newScreenId = data.screenId ?? currentShowtime.screenId;
+  const newStartTime = data.startTime ?? currentShowtime.startTime;
+  const newEndTime = data.endTime ?? currentShowtime.endTime;
+
+  const overlappingShowtime = await prisma.showtime.findFirst({
+    where: {
+      id: {
+        not: id,
+      },
+      screenId: newScreenId,
+      AND: [
+        {
+          startTime: {
+            lt: newEndTime,
+          },
+        },
+        {
+          endTime: {
+            gt: newStartTime,
+          },
+        },
+      ],
+    },
+  });
+
+  if (overlappingShowtime) {
+    throw new Error("Showtime overlaps with an existing show");
+  }
+
   const showtime = await prisma.showtime.update({
     where: {
       id,
