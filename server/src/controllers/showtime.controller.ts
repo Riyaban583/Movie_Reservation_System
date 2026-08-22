@@ -100,4 +100,23 @@ async updateShowtime(req: Request, res: Response) {
     });
   }
 }
+
+async deleteShowtime(req: Request, res: Response) {
+  try {
+    const showtime = await showtimeService.deleteShowtime(
+      req.params.id
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Showtime deleted successfully",
+      data: showtime,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
 }

@@ -30,4 +30,11 @@ router.put(
   (req, res) => showtimeController.updateShowtime(req, res)
 );
 
+router.delete(
+  "/:id",
+  authenticate,
+  authorize("ADMIN"),
+  (req, res) => showtimeController.deleteShowtime(req, res)
+);
+
 export default router;

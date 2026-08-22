@@ -91,4 +91,14 @@ async updateShowtime(
 
   return showtime;
 }
+
+async deleteShowtime(id: string) {
+  const showtime = await prisma.showtime.delete({
+    where: {
+      id,
+    },
+  });
+
+  return showtime;
+}
 }
