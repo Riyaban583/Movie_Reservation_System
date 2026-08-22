@@ -58,10 +58,10 @@ export class ShowtimeService {
 
 async getShowtimesByDate(date: Date) {
   const startOfDay = new Date(date);
-  startOfDay.setHours(0, 0, 0, 0);
+  startOfDay.setUTCHours(0, 0, 0, 0);
 
   const endOfDay = new Date(date);
-  endOfDay.setHours(23, 59, 59, 999);
+  endOfDay.setUTCHours(23, 59, 59, 999);
 
   const showtimes = await prisma.showtime.findMany({
     where: {
@@ -76,5 +76,19 @@ async getShowtimesByDate(date: Date) {
   });
 
   return showtimes;
+}
+
+async updateShowtime(
+  id: string,
+  data: Partial<CreateShowtimeData>
+) {
+  const showtime = await prisma.showtime.update({
+    where: {
+      id,
+    },
+    data,
+  });
+
+  return showtime;
 }
 }

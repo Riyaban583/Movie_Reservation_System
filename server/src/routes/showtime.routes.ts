@@ -23,4 +23,11 @@ router.get(
   (req, res) => showtimeController.getShowtimesByDate(req, res)
 );
 
+router.put(
+  "/:id",
+  authenticate,
+  authorize("ADMIN"),
+  (req, res) => showtimeController.updateShowtime(req, res)
+);
+
 export default router;

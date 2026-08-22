@@ -71,4 +71,33 @@ async getShowtimesByDate(req: Request, res: Response) {
     });
   }
 }
+
+async updateShowtime(req: Request, res: Response) {
+  try {
+    const showtime = await showtimeService.updateShowtime(
+      req.params.id,
+      {
+        movieId: req.body.movieId,
+        screenId: req.body.screenId,
+        startTime: req.body.startTime
+          ? new Date(req.body.startTime)
+          : undefined,
+        endTime: req.body.endTime
+          ? new Date(req.body.endTime)
+          : undefined,
+      }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Showtime updated successfully",
+      data: showtime,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
 }
