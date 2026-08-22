@@ -28,4 +28,47 @@ export class ShowtimeController {
       });
     }
   }
+
+  async getAllShowtimes(req: Request, res: Response) {
+  try {
+    const showtimes = await showtimeService.getAllShowtimes();
+
+    return res.status(200).json({
+      success: true,
+      count: showtimes.length,
+      data: showtimes,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
+async getShowtimesByDate(req: Request, res: Response) {
+  try {
+    const date = new Date(req.query.date as string);
+
+    if (isNaN(date.getTime())) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid date",
+      });
+    }
+
+    const showtimes = await showtimeService.getShowtimesByDate(date);
+
+    return res.status(200).json({
+      success: true,
+      count: showtimes.length,
+      data: showtimes,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
 }

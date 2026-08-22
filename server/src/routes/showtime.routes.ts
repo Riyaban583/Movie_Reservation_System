@@ -13,4 +13,14 @@ router.post(
   (req, res) => showtimeController.createShowtime(req, res)
 );
 
+router.get(
+  "/",
+  (req, res) => showtimeController.getAllShowtimes(req, res)
+);
+
+router.get(
+  "/date",
+  (req, res) => showtimeController.getShowtimesByDate(req, res)
+);
+
 export default router;
