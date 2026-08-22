@@ -32,6 +32,7 @@ model Movie {
   releaseDate DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  showtimes Showtime[]
 }
 
 model Theater {
@@ -54,6 +55,7 @@ model Screen {
   theater   Theater  @relation(fields: [theaterId], references: [id], onDelete: Cascade)
 
   seats     Seat[]
+  showtimes Showtime[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -70,4 +72,20 @@ model Seat {
   updatedAt  DateTime @updatedAt
 
   @@unique([screenId, seatNumber])
+}
+
+model Showtime {
+  id        String   @id @default(cuid())
+
+  movieId   String
+  movie     Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  screenId  String
+  screen    Screen   @relation(fields: [screenId], references: [id], onDelete: Cascade)
+
+  startTime DateTime
+  endTime   DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
