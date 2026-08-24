@@ -43,4 +43,24 @@ export class ReservationController {
     });
   }
 }
+
+async cancelReservation(req: Request, res: Response) {
+  try {
+    const reservation = await reservationService.cancelReservation(
+      req.params.id,
+      req.user.userId
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Reservation cancelled successfully",
+      data: reservation,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
 }

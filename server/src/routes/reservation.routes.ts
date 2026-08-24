@@ -11,10 +11,16 @@ router.post(
   (req, res) => reservationController.createReservation(req, res)
 );
 
-router.post(
-  "/",
+router.get(
+  "/my",
   authenticate,
-  (req, res) => reservationController.createReservation(req, res)
+  (req, res) => reservationController.getUserReservations(req, res)
+);
+
+router.patch(
+  "/:id/cancel",
+  authenticate,
+  (req, res) => reservationController.cancelReservation(req, res)
 );
 
 export default router;

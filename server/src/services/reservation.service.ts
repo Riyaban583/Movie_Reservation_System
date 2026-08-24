@@ -41,4 +41,42 @@ export class ReservationService {
 
   return reservations;
 }
+
+async cancelReservation(
+  reservationId: string,
+  userId: string
+) {
+  const reservation = await prisma.reservation.findFirst({
+    where: {
+      id: reservationId,
+      userId,
+    },
+    include: {
+      showtime: true,
+    },
+  });
+
+  if (!reservation) {
+    throw new Error("Reservation not found");
+  }
+
+  if (reservation.status === "CANCELLED") {
+    throw new Error("Reservation is already cancelled");
+  }
+
+  if (reservation.showtime.startTime <= new Date()) {
+    throw new Error("Only upcoming reservations can be cancelled");
+  }
+
+  const cancelledReservation = await prisma.reservation.update({
+    where: {
+      id: reservationId,
+    },
+    data: {
+      status: "CANCELLED",
+    },
+  });
+
+  return cancelledReservation;
+}
 }
