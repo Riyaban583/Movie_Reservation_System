@@ -77,4 +77,23 @@ export class ScreenController {
       });
     }
   }
+
+  async getSeatAvailabilityByShowtime(req: Request, res: Response) {
+  try {
+    const seats = await screenService.getSeatAvailabilityByShowtime(
+      req.params.showtimeId
+    );
+
+    return res.status(200).json({
+      success: true,
+      count: seats.length,
+      data: seats,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
 }

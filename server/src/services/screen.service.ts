@@ -52,4 +52,45 @@ export class ScreenService {
 
   return seats;
 }
+
+async getSeatAvailabilityByShowtime(showtimeId: string) {
+  const showtime = await prisma.showtime.findUnique({
+    where: {
+      id: showtimeId,
+    },
+    include: {
+      screen: {
+        include: {
+          seats: true,
+        },
+      },
+    },
+  });
+
+  if (!showtime) {
+    throw new Error("Showtime not found");
+  }
+
+  const reservedSeats = await prisma.reservationSeat.findMany({
+    where: {
+      reservation: {
+        showtimeId,
+        status: "CONFIRMED",
+      },
+    },
+    select: {
+      seatId: true,
+    },
+  });
+
+  const reservedSeatIds = new Set(
+    reservedSeats.map((item) => item.seatId)
+  );
+
+  return showtime.screen.seats.map((seat) => ({
+    id: seat.id,
+    seatNumber: seat.seatNumber,
+    available: !reservedSeatIds.has(seat.id),
+  }));
+}
 }

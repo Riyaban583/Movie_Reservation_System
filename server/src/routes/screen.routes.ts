@@ -25,4 +25,9 @@ router.get(
   (req, res) => screenController.getSeatsByScreen(req, res)
 );
 
+router.get(
+  "/showtime/:showtimeId/seats",
+  (req, res) => screenController.getSeatAvailabilityByShowtime(req, res)
+);
+
 export default router;
