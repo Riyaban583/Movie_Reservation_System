@@ -79,4 +79,17 @@ async cancelReservation(
 
   return cancelledReservation;
 }
+
+async getAllReservations() {
+  const reservations = await prisma.reservation.findMany({
+    include: {
+      seats: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return reservations;
+}
 }

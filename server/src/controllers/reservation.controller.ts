@@ -63,4 +63,21 @@ async cancelReservation(req: Request, res: Response) {
     });
   }
 }
+
+async getAllReservations(req: Request, res: Response) {
+  try {
+    const reservations = await reservationService.getAllReservations();
+
+    return res.status(200).json({
+      success: true,
+      count: reservations.length,
+      data: reservations,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
 }
