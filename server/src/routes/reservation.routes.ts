@@ -11,4 +11,10 @@ router.post(
   (req, res) => reservationController.createReservation(req, res)
 );
 
+router.post(
+  "/",
+  authenticate,
+  (req, res) => reservationController.createReservation(req, res)
+);
+
 export default router;

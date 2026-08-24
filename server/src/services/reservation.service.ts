@@ -25,4 +25,20 @@ export class ReservationService {
 
     return reservation;
   }
+
+  async getUserReservations(userId: string) {
+  const reservations = await prisma.reservation.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      seats: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return reservations;
+}
 }

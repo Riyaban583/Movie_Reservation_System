@@ -24,4 +24,23 @@ export class ReservationController {
       });
     }
   }
+
+  async getUserReservations(req: Request, res: Response) {
+  try {
+    const reservations = await reservationService.getUserReservations(
+      req.user.userId
+    );
+
+    return res.status(200).json({
+      success: true,
+      count: reservations.length,
+      data: reservations,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
 }
