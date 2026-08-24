@@ -20,6 +20,7 @@ model User {
   role      String   @default("USER")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  reservations Reservation[]
 }
 
 model Movie {
@@ -72,6 +73,8 @@ model Seat {
   updatedAt  DateTime @updatedAt
 
   @@unique([screenId, seatNumber])
+
+  reservationSeats ReservationSeat[]
 }
 
 model Showtime {
@@ -88,4 +91,37 @@ model Showtime {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  reservations Reservation[] 
+}
+
+model Reservation {
+  id        String   @id @default(cuid())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  showtimeId String
+  showtime   Showtime @relation(fields: [showtimeId], references: [id], onDelete: Cascade)
+
+  status    String   @default("CONFIRMED")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  seats     ReservationSeat[]
+}
+
+model ReservationSeat {
+  id            String      @id @default(cuid())
+
+  reservationId String
+  reservation   Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+
+  seatId        String
+  seat          Seat        @relation(fields: [seatId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime    @default(now())
+
+  @@unique([reservationId, seatId])
 }
