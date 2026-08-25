@@ -13,11 +13,12 @@ export class ReservationService {
       data: {
         userId: data.userId,
         showtimeId: data.showtimeId,
-        seats: {
-          create: data.seatIds.map((seatId) => ({
-            seatId,
-          })),
-        },
+       seats: {
+  create: data.seatIds.map((seatId) => ({
+    seatId,
+    showtimeId: data.showtimeId,
+  })),
+},
       },
       include: {
         seats: true,

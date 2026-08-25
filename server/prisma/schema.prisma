@@ -106,6 +106,7 @@ model Reservation {
   showtime   Showtime @relation(fields: [showtimeId], references: [id], onDelete: Cascade)
 
   status    String   @default("CONFIRMED")
+  expiresAt DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
