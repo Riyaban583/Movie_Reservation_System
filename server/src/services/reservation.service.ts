@@ -8,7 +8,8 @@ interface CreateReservationData {
 
 export class ReservationService {
   async createReservation(data: CreateReservationData) {
-    const reservation = await prisma.reservation.create({
+  const reservation = await prisma.$transaction(async (tx) => {
+    const createdReservation = await tx.reservation.create({
       data: {
         userId: data.userId,
         showtimeId: data.showtimeId,
@@ -23,8 +24,11 @@ export class ReservationService {
       },
     });
 
-    return reservation;
-  }
+    return createdReservation;
+  });
+
+  return reservation;
+}
 
   async getUserReservations(userId: string) {
   const reservations = await prisma.reservation.findMany({
