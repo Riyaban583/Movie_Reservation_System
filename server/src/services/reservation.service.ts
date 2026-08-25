@@ -13,6 +13,8 @@ export class ReservationService {
       data: {
         userId: data.userId,
         showtimeId: data.showtimeId,
+        status: "HELD",
+expiresAt: new Date(Date.now() + 10 * 60 * 1000),
        seats: {
   create: data.seatIds.map((seatId) => ({
     seatId,
@@ -96,5 +98,21 @@ async getAllReservations() {
   });
 
   return reservations;
+}
+
+async expireHeldReservations() {
+  const expiredReservations = await prisma.reservation.updateMany({
+    where: {
+      status: "HELD",
+      expiresAt: {
+        lt: new Date(),
+      },
+    },
+    data: {
+      status: "CANCELLED",
+    },
+  });
+
+  return expiredReservations;
 }
 }

@@ -72,16 +72,26 @@ async getSeatAvailabilityByShowtime(showtimeId: string) {
   }
 
   const reservedSeats = await prisma.reservationSeat.findMany({
-    where: {
-      reservation: {
-        showtimeId,
-        status: "CONFIRMED",
-      },
+  where: {
+    reservation: {
+      showtimeId,
+      OR: [
+        {
+          status: "CONFIRMED",
+        },
+        {
+          status: "HELD",
+          expiresAt: {
+            gt: new Date(),
+          },
+        },
+      ],
     },
-    select: {
-      seatId: true,
-    },
-  });
+  },
+  select: {
+    seatId: true,
+  },
+});
 
   const reservedSeatIds = new Set(
     reservedSeats.map((item) => item.seatId)
