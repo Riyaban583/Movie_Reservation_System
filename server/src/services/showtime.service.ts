@@ -44,6 +44,8 @@ export class ShowtimeService {
       },
     });
 
+    await redis.del("showtimes:all");
+
     return showtime;
   }
 
@@ -145,7 +147,7 @@ async updateShowtime(
     },
     data,
   });
-
+  await redis.del("showtimes:all");
   return showtime;
 }
 
@@ -155,7 +157,7 @@ async deleteShowtime(id: string) {
       id,
     },
   });
-
+  await redis.del("showtimes:all");
   return showtime;
 }
 }

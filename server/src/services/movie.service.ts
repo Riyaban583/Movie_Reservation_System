@@ -23,6 +23,7 @@ export class MovieService {
       },
     });
 
+    await redis.del("movies:all");
     return movie;
   }
 
@@ -69,6 +70,8 @@ async updateMovie(id: string, data: any) {
     data,
   });
 
+  await redis.del("movies:all");
+
   return movie;
 }
 
@@ -78,6 +81,8 @@ async deleteMovie(id: string) {
       id,
     },
   });
+
+  await redis.del("movies:all");
 
   return movie;
 }

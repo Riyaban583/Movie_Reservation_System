@@ -1,5 +1,7 @@
 import app from "./app";
 import "./config/env";
+import "./lib/queue";
+import "./workers/email.worker";
 
 const PORT = process.env.PORT || 5000;
 
