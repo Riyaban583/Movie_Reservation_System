@@ -7,6 +7,7 @@ import screenRoutes from "./routes/screen.routes";
 import showtimeRoutes from "./routes/showtime.routes";
 import reservationRoutes from "./routes/reservation.routes";
 import { errorHandler } from "./middlewares/error.middleware";
+import redis from "./lib/redis";
 
 const app = express();
 
