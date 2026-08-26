@@ -1,4 +1,5 @@
 import prisma from "../lib/prisma";
+import redis from "../lib/redis";
 
 interface CreateShowtimeData {
   movieId: string;
@@ -47,14 +48,31 @@ export class ShowtimeService {
   }
 
   async getAllShowtimes() {
+  const cacheKey = "showtimes:all";
+
+  const cachedShowtimes = await redis.get(cacheKey);
+
+  if (cachedShowtimes) {
+    return JSON.parse(cachedShowtimes);
+  }
+
   const showtimes = await prisma.showtime.findMany({
     orderBy: {
       startTime: "asc",
     },
   });
 
-  return showtimes;
-}
+  const cacheResult = await redis.set(
+  cacheKey,
+  JSON.stringify(showtimes),
+  "EX",
+  300
+);
+
+console.log("Showtime cache set:", cacheResult);
+
+return showtimes;
+  }
 
 async getShowtimesByDate(date: Date) {
   const startOfDay = new Date(date);

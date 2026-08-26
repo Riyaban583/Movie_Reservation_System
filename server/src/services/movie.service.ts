@@ -1,4 +1,5 @@
 import prisma from "../lib/prisma";
+import redis from "../lib/redis";
 
 interface CreateMovieData {
   title: string;
@@ -26,14 +27,29 @@ export class MovieService {
   }
 
   async getAllMovies() {
-    const movies = await prisma.movie.findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+  const cacheKey = "movies:all";
 
-    return movies;
+  const cachedMovies = await redis.get(cacheKey);
+
+  if (cachedMovies) {
+    return JSON.parse(cachedMovies);
   }
+
+  const movies = await prisma.movie.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  await redis.set(
+    cacheKey,
+    JSON.stringify(movies),
+    "EX",
+    300
+  );
+
+  return movies;
+}
 
   async getMovieById(id: string) {
   const movie = await prisma.movie.findUnique({
