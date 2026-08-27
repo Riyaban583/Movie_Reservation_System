@@ -1,5 +1,6 @@
 import prisma from "../lib/prisma";
 import { getIO } from "../lib/socket";
+import { emailQueue } from "../lib/queue";
 
 interface CreateReservationData {
   userId: string;
@@ -35,6 +36,13 @@ const io = getIO();
 
 io.emit("seatAvailabilityUpdated", {
   showtimeId: data.showtimeId,
+});
+
+await emailQueue.add("booking-confirmation", {
+  userId: data.userId,
+  reservationId: reservation.id,
+  showtimeId: data.showtimeId,
+  seatIds: data.seatIds,
 });
 
 return reservation;
