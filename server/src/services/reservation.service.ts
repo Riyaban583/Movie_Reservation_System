@@ -11,7 +11,30 @@ interface CreateReservationData {
 
 export class ReservationService {
   async createReservation(data: CreateReservationData) {
- const reservation = await prisma.$transaction(async (tx) => {
+const reservation = await prisma.$transaction(async (tx) => {
+
+  await tx.reservationSeat.deleteMany({
+    where: {
+      showtimeId: data.showtimeId,
+      seatId: {
+        in: data.seatIds,
+      },
+      reservation: {
+        OR: [
+          {
+            status: "CANCELLED",
+          },
+          {
+            status: "HELD",
+            expiresAt: {
+              lt: new Date(),
+            },
+          },
+        ],
+      },
+    },
+  });
+
   const createdReservation = await tx.reservation.create({
     data: {
       userId: data.userId,
@@ -99,6 +122,13 @@ async cancelReservation(
       status: "CANCELLED",
     },
   });
+
+  const io = getIO();
+
+io.emit("reservationStatusUpdated", {
+  reservationId: cancelledReservation.id,
+  status: cancelledReservation.status,
+});
 
   return cancelledReservation;
 }
