@@ -1,4 +1,5 @@
 import { Worker } from "bullmq";
+import transporter from "../lib/mailer";
 
 const connection = {
   host: "localhost",
@@ -10,6 +11,23 @@ const emailWorker = new Worker(
   async (job) => {
     console.log("📩 Processing email job:", job.name);
     console.log("Job data:", job.data);
+
+    if (job.name === "booking-confirmation") {
+      const { reservationId, showtimeId, seatIds } = job.data;
+
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_USER,
+        subject: "Booking Confirmation",
+        text: `Your booking is confirmed.
+
+Reservation ID: ${reservationId}
+Showtime ID: ${showtimeId}
+Seats: ${seatIds.join(", ")}`,
+      });
+
+      console.log("✅ Booking confirmation email sent");
+    }
   },
   {
     connection,
