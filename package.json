@@ -1,6 +1,10 @@
 {
   "dependencies": {
     "dotenv": "^17.4.2",
+    "qrcode": "^1.5.4",
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.6"
   }
 }

@@ -1,6 +1,7 @@
 import prisma from "../lib/prisma";
 import { getIO } from "../lib/socket";
 import { emailQueue } from "../lib/queue";
+import { generateQRCode } from "../lib/qr";
 
 interface CreateReservationData {
   userId: string;
@@ -31,7 +32,7 @@ export class ReservationService {
 
   return createdReservation;
 });
-
+const qrCode = await generateQRCode(reservation.id);
 const io = getIO();
 
 io.emit("seatAvailabilityUpdated", {
