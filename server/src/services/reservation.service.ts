@@ -1,4 +1,5 @@
 import prisma from "../lib/prisma";
+import { getIO } from "../lib/socket";
 
 interface CreateReservationData {
   userId: string;
@@ -8,29 +9,35 @@ interface CreateReservationData {
 
 export class ReservationService {
   async createReservation(data: CreateReservationData) {
-  const reservation = await prisma.$transaction(async (tx) => {
-    const createdReservation = await tx.reservation.create({
-      data: {
-        userId: data.userId,
-        showtimeId: data.showtimeId,
-        status: "HELD",
-expiresAt: new Date(Date.now() + 10 * 60 * 1000),
-       seats: {
-  create: data.seatIds.map((seatId) => ({
-    seatId,
-    showtimeId: data.showtimeId,
-  })),
-},
+ const reservation = await prisma.$transaction(async (tx) => {
+  const createdReservation = await tx.reservation.create({
+    data: {
+      userId: data.userId,
+      showtimeId: data.showtimeId,
+      status: "HELD",
+      expiresAt: new Date(Date.now() + 10 * 60 * 1000),
+      seats: {
+        create: data.seatIds.map((seatId) => ({
+          seatId,
+          showtimeId: data.showtimeId,
+        })),
       },
-      include: {
-        seats: true,
-      },
-    });
-
-    return createdReservation;
+    },
+    include: {
+      seats: true,
+    },
   });
 
-  return reservation;
+  return createdReservation;
+});
+
+const io = getIO();
+
+io.emit("seatAvailabilityUpdated", {
+  showtimeId: data.showtimeId,
+});
+
+return reservation;
 }
 
   async getUserReservations(userId: string) {
