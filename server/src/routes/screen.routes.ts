@@ -26,6 +26,13 @@ router.get(
 );
 
 router.get(
+  "/",
+  authenticate,
+  authorize("ADMIN"),
+  (req, res) => screenController.getAllScreens(req, res)
+);
+
+router.get(
   "/showtime/:showtimeId/seats",
   (req, res) => screenController.getSeatAvailabilityByShowtime(req, res)
 );

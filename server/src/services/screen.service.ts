@@ -41,66 +41,81 @@ export class ScreenService {
   }
 
   async getSeatsByScreen(screenId: string) {
-  const seats = await prisma.seat.findMany({
-    where: {
-      screenId,
-    },
-    orderBy: {
-      seatNumber: "asc",
-    },
-  });
-
-  return seats;
-}
-
-async getSeatAvailabilityByShowtime(showtimeId: string) {
-  const showtime = await prisma.showtime.findUnique({
-    where: {
-      id: showtimeId,
-    },
-    include: {
-      screen: {
-        include: {
-          seats: true,
-        },
+    const seats = await prisma.seat.findMany({
+      where: {
+        screenId,
       },
-    },
-  });
+      orderBy: {
+        seatNumber: "asc",
+      },
+    });
 
-  if (!showtime) {
-    throw new Error("Showtime not found");
+    return seats;
   }
 
-  const reservedSeats = await prisma.reservationSeat.findMany({
-  where: {
-    reservation: {
-      showtimeId,
-      OR: [
-        {
-          status: "CONFIRMED",
-        },
-        {
-          status: "HELD",
-          expiresAt: {
-            gt: new Date(),
+  async getAllScreens() {
+    const screens = await prisma.screen.findMany({
+      include: {
+        theater: true,
+        seats: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return screens;
+  }
+
+  async getSeatAvailabilityByShowtime(showtimeId: string) {
+    const showtime = await prisma.showtime.findUnique({
+      where: {
+        id: showtimeId,
+      },
+      include: {
+        screen: {
+          include: {
+            seats: true,
           },
         },
-      ],
-    },
-  },
-  select: {
-    seatId: true,
-  },
-});
+      },
+    });
 
-  const reservedSeatIds = new Set(
-    reservedSeats.map((item) => item.seatId)
-  );
+    if (!showtime) {
+      throw new Error("Showtime not found");
+    }
 
-  return showtime.screen.seats.map((seat) => ({
-    id: seat.id,
-    seatNumber: seat.seatNumber,
-    available: !reservedSeatIds.has(seat.id),
-  }));
+    const reservedSeats = await prisma.reservationSeat.findMany({
+      where: {
+        reservation: {
+          showtimeId,
+          OR: [
+            {
+              status: "CONFIRMED",
+            },
+            {
+              status: "HELD",
+              expiresAt: {
+                gt: new Date(),
+              },
+            },
+          ],
+        },
+      },
+      select: {
+        seatId: true,
+      },
+    });
+
+    const reservedSeatIds = new Set(
+      reservedSeats.map((item) => item.seatId)
+    );
+
+    return showtime.screen.seats.map((seat) => ({
+      id: seat.id,
+      seatNumber: seat.seatNumber,
+      available: !reservedSeatIds.has(seat.id),
+    }));
+  }
 }
-}
+

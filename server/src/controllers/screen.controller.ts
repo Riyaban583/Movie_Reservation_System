@@ -78,6 +78,23 @@ export class ScreenController {
     }
   }
 
+  async getAllScreens(req: Request, res: Response) {
+  try {
+    const screens = await screenService.getAllScreens();
+
+    return res.status(200).json({
+      success: true,
+      count: screens.length,
+      data: screens,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
   async getSeatAvailabilityByShowtime(req: Request, res: Response) {
   try {
     const seats = await screenService.getSeatAvailabilityByShowtime(
