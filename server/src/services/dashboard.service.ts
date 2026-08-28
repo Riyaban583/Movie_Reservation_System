@@ -35,34 +35,6 @@ export class DashboardService {
           },
         },
       },
-
-      async getBookingTrendSummary() {
-  const reservations = await prisma.reservation.findMany({
-    select: {
-      createdAt: true,
-    },
-    orderBy: {
-      createdAt: "asc",
-    },
-  });
-
-  const trendMap: Record<string, number> = {};
-
-  for (const reservation of reservations) {
-    const date = reservation.createdAt
-      .toISOString()
-      .split("T")[0];
-
-    trendMap[date] = (trendMap[date] || 0) + 1;
-  }
-
-  return Object.entries(trendMap).map(
-    ([date, bookings]) => ({
-      date,
-      bookings,
-    })
-  );
-}
     });
 
     let totalCapacity = 0;
@@ -86,5 +58,31 @@ export class DashboardService {
       availableSeats: totalCapacity - bookedSeats,
       occupancyPercentage,
     };
+  }
+
+  async getBookingTrendSummary() {
+    const reservations = await prisma.reservation.findMany({
+      select: {
+        createdAt: true,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+
+    const trendMap: Record<string, number> = {};
+
+    for (const reservation of reservations) {
+      const date = reservation.createdAt
+        .toISOString()
+        .split("T")[0];
+
+      trendMap[date] = (trendMap[date] || 0) + 1;
+    }
+
+    return Object.entries(trendMap).map(([date, bookings]) => ({
+      date,
+      bookings,
+    }));
   }
 }
