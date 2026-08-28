@@ -13,4 +13,17 @@ router.get(
   (req, res) => dashboardController.getDashboardSummary(req, res)
 );
 
+router.get(
+  "/occupancy",
+  authenticate,
+  authorize("ADMIN"),
+  (req, res) => dashboardController.getOccupancySummary(req, res)
+);
+
+router.get(
+  "/booking-trends",
+  authenticate,
+  authorize("ADMIN"),
+  (req, res) => dashboardController.getBookingTrendSummary(req, res)
+);
 export default router;
