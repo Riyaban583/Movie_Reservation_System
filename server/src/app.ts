@@ -7,6 +7,7 @@ import screenRoutes from "./routes/screen.routes";
 import showtimeRoutes from "./routes/showtime.routes";
 import reservationRoutes from "./routes/reservation.routes";
 import { errorHandler } from "./middlewares/error.middleware";
+import dashboardRoutes from "./routes/dashboard.routes";
 import redis from "./lib/redis";
 
 const app = express();
@@ -20,6 +21,7 @@ app.use("/api/theaters", theaterRoutes);
 app.use("/api/screens", screenRoutes);
 app.use("/api/showtimes", showtimeRoutes);
 app.use("/api/reservations", reservationRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 app.use(errorHandler);
 
 app.get("/", (req, res) => {
