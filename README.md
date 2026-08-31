@@ -56,7 +56,7 @@ The project is under **active development**, with authentication fully implement
 ### 🔐 Security
 - Bcrypt password hashing
 - JWT token-based auth
-- Environment-based secrets
+- Environment-based secrets 
 - Route-level protection
 - MVC separation of concerns of seats
 
@@ -252,7 +252,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 | `password` | String | Hashed password |
 | `role` | String | `USER` or `ADMIN` |
 | `createdAt` | DateTime | Record creation timestamp |
-| `updatedAt` | DateTime | Last updated timestamp |
+| `updatedAt` | DateTime | Last update timestamp |
 
 > Additional models (`Movie`, `Booking`, `Theatre`, `Show`, `Seat`) are planned as the project evolves.
 
