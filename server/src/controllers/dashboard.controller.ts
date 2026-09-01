@@ -51,4 +51,20 @@ async getBookingTrendSummary(req: Request, res: Response) {
     });
   }
 }
+
+async getRevenueSummary(req: Request, res: Response) {
+  try {
+    const revenue = await dashboardService.getRevenueSummary();
+
+    return res.status(200).json({
+      success: true,
+      data: revenue,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
 }

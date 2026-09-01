@@ -85,4 +85,30 @@ export class DashboardService {
       bookings,
     }));
   }
+
+  async getRevenueSummary() {
+  const reservations = await prisma.reservation.findMany({
+    where: {
+      status: "CONFIRMED",
+    },
+    include: {
+      showtime: {
+        select: {
+          price: true,
+        },
+      },
+      seats: true,
+    },
+  });
+
+  let totalRevenue = 0;
+
+  for (const reservation of reservations) {
+    totalRevenue += reservation.seats.length * reservation.showtime.price;
+  }
+
+  return {
+    totalRevenue,
+  };
+}
 }

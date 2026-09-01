@@ -26,4 +26,11 @@ router.get(
   authorize("ADMIN"),
   (req, res) => dashboardController.getBookingTrendSummary(req, res)
 );
+
+router.get(
+  "/revenue",
+  authenticate,
+  authorize("ADMIN"),
+  (req, res) => dashboardController.getRevenueSummary(req, res)
+);
 export default router;

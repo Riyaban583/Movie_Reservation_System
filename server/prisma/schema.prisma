@@ -88,6 +88,7 @@ model Showtime {
 
   startTime DateTime
   endTime   DateTime
+  price     Float   @default(200)
 
   reservations      Reservation[]
   reservationSeats  ReservationSeat[]
