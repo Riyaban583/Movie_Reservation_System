@@ -13,6 +13,20 @@ router.post(
   (req, res) => showtimeController.createShowtime(req, res)
 );
 
+/**
+ * @swagger
+ * /api/showtimes:
+ *   get:
+ *     summary: Get all showtimes
+ *     tags:
+ *       - Showtimes
+ *     responses:
+ *       200:
+ *         description: Successfully fetched all showtimes
+ *       500:
+ *         description: Internal server error
+ */
+
 router.get(
   "/",
   (req, res) => showtimeController.getAllShowtimes(req, res)

@@ -8,6 +8,8 @@ import showtimeRoutes from "./routes/showtime.routes";
 import reservationRoutes from "./routes/reservation.routes";
 import { errorHandler } from "./middlewares/error.middleware";
 import dashboardRoutes from "./routes/dashboard.routes";
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./config/swagger";
 import redis from "./lib/redis";
 
 const app = express();
@@ -22,6 +24,8 @@ app.use("/api/screens", screenRoutes);
 app.use("/api/showtimes", showtimeRoutes);
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(errorHandler);
 
 app.get("/", (req, res) => {

@@ -1,9 +1,13 @@
 import { Router } from "express";
+
 import { MovieController } from "../controllers/movie.controller";
+
 import { authenticate } from "../middlewares/auth.middleware";
+
 import { authorize } from "../middlewares/role.middleware";
 
 const router = Router();
+
 const movieController = new MovieController();
 
 router.post(
@@ -13,7 +17,19 @@ router.post(
   (req, res) => movieController.createMovie(req, res)
 );
 
-// 👇 NEW ROUTE
+/**
+ * @swagger
+ * /api/movies:
+ *   get:
+ *     summary: Get all movies
+ *     tags:
+ *       - Movies
+ *     responses:
+ *       200:
+ *         description: Successfully fetched all movies
+ *       500:
+ *         description: Internal server error
+ */
 router.get(
   "/",
   (req, res) => movieController.getAllMovies(req, res)
