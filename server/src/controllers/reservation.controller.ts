@@ -1,16 +1,19 @@
 import { Request, Response } from "express";
 import { ReservationService } from "../services/reservation.service";
+import { createReservationSchema } from "../utils/validations/reservation.validation";
 
 const reservationService = new ReservationService();
 
 export class ReservationController {
   async createReservation(req: Request, res: Response) {
     try {
-      const reservation = await reservationService.createReservation({
-        userId: req.user.userId,
-        showtimeId: req.body.showtimeId,
-        seatIds: req.body.seatIds,
-      });
+      const validatedData = createReservationSchema.parse(req.body);
+
+const reservation = await reservationService.createReservation({
+  userId: req.user.userId,
+  showtimeId: validatedData.showtimeId,
+  seatIds: validatedData.seatIds,
+});
 
       return res.status(201).json({
         success: true,
@@ -18,11 +21,19 @@ export class ReservationController {
         data: reservation,
       });
     } catch (error: any) {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    }
+  if (error?.name === "ZodError") {
+    return res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors: error.issues,
+    });
+  }
+
+  return res.status(500).json({
+    success: false,
+    message: error.message,
+  });
+}
   }
 
   async getUserReservations(req: Request, res: Response) {
