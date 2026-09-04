@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import socket from "../../socket";
 
 interface Seat {
   id: string;
@@ -22,32 +23,54 @@ const [error, setError] = useState("");
 const [booking, setBooking] = useState(false);
 const [confirmation, setConfirmation] = useState<any>(null);
  
-  useEffect(() => {
-    const fetchSeats = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:5000/api/screens/showtime/${showtimeId}/seats`
-        );
+ useEffect(() => {
+  const fetchSeats = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/screens/showtime/${showtimeId}/seats`
+      );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch seats");
-        }
-
-        const result = await response.json();
-
-        setSeats(result.data || []);
-      } catch (err: any) {
-        console.error(err);
-        setError(err.message || "Unable to load seats.");
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error("Failed to fetch seats");
       }
-    };
 
-    if (showtimeId) {
-      fetchSeats();
+      const result = await response.json();
+
+      setSeats(result.data || []);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Unable to load seats.");
+    } finally {
+      setLoading(false);
     }
-  }, [showtimeId]);
+  };
+
+  const handleSeatAvailabilityUpdate = (data: {
+    showtimeId: string;
+  }) => {
+    if (data.showtimeId !== showtimeId) {
+      return;
+    }
+
+    fetchSeats();
+  };
+
+  if (showtimeId) {
+    fetchSeats();
+
+    socket.on(
+      "seatAvailabilityUpdated",
+      handleSeatAvailabilityUpdate
+    );
+  }
+
+  return () => {
+    socket.off(
+      "seatAvailabilityUpdated",
+      handleSeatAvailabilityUpdate
+    );
+  };
+}, [showtimeId]);
 
   const toggleSeat = (seat: Seat) => {
     if (!seat.available) {

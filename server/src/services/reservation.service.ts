@@ -69,7 +69,10 @@ await emailQueue.add("booking-confirmation", {
   seatIds: data.seatIds,
 });
 
-return reservation;
+return {
+  ...reservation,
+  qrCode,
+};
 }
 
   async getUserReservations(userId: string) {

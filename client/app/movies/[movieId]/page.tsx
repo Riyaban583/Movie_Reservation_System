@@ -31,6 +31,7 @@ export default function MovieDetailsPage() {
   const [showtimes, setShowtimes] = useState<Showtime[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     const fetchMovieData = async () => {
@@ -71,6 +72,22 @@ export default function MovieDetailsPage() {
       minute: "2-digit",
     });
   };
+
+  const availableDates = Array.from(
+  new Set(
+    showtimes.map((showtime) =>
+      new Date(showtime.startTime).toISOString().slice(0, 10)
+    )
+  )
+);
+
+const filteredShowtimes = selectedDate
+  ? showtimes.filter(
+      (showtime) =>
+        new Date(showtime.startTime).toISOString().slice(0, 10) ===
+        selectedDate
+    )
+  : showtimes;
 
   const formatDate = (time: string) => {
     return new Date(time).toLocaleDateString("en-IN", {
@@ -167,6 +184,37 @@ export default function MovieDetailsPage() {
             <h2 className="mt-2 text-3xl font-bold">
               Available Showtimes
             </h2>
+
+            <div className="mt-5 flex flex-wrap gap-3">
+  <button
+    onClick={() => setSelectedDate("")}
+    className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
+      selectedDate === ""
+        ? "bg-white text-black"
+        : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+    }`}
+  >
+    All Dates
+  </button>
+
+  {availableDates.map((date) => (
+    <button
+      key={date}
+      onClick={() => setSelectedDate(date)}
+      className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
+        selectedDate === date
+          ? "bg-white text-black"
+          : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+      }`}
+    >
+      {new Date(`${date}T00:00:00`).toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })}
+    </button>
+  ))}
+</div>
           </div>
 
           {showtimes.length === 0 ? (
@@ -177,7 +225,7 @@ export default function MovieDetailsPage() {
             </div>
           ) : (
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {showtimes.map((showtime) => (
+             {filteredShowtimes.map((showtime) => (
                 <div
                   key={showtime.id}
                   className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 transition hover:border-zinc-600 hover:bg-zinc-800"
