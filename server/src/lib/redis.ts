@@ -18,6 +18,5 @@ export async function testRedis() {
   console.log("Redis test value:", value);
 }
 
-testRedis();
 
 export default redis;

@@ -15,8 +15,6 @@ export const authenticate = (
     });
   }
 
-  console.log("HEADERS:", req.headers);
-
   const token = authHeader.split(" ")[1];
 
   if (!token) {

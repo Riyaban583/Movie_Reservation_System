@@ -1,5 +1,6 @@
 import request from "supertest";
 import app from "../app";
+import redis from "../lib/redis";
 
 describe("Movies API", () => {
   it(
@@ -15,4 +16,8 @@ describe("Movies API", () => {
     },
     15000
   );
+
+  afterAll(async () => {
+    await redis.quit();
+  });
 });
