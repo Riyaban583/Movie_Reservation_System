@@ -135,8 +135,7 @@ Create a `.env` file in the `server/` directory:
 ```env
 PORT=5000
 
-DATABASE_URL="postgresql://postgres:password@localhost:5432/movie_reservation"
-
+DATABASE_URL="your_database_url"
 JWT_SECRET="your_secret"
 JWT_EXPIRES_IN="7d"
 
