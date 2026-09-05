@@ -11,11 +11,42 @@ import dashboardRoutes from "./routes/dashboard.routes";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger";
 import redis from "./lib/redis";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 
 const app = express();
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many requests. Please try again later.",
+  },
+});
 
-app.use(cors());
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  process.env.PRODUCTION_CLIENT_URL,
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  })
+);
+app.use(helmet());
 app.use(express.json());
+app.use("/api", apiLimiter);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/movies", movieRoutes);
