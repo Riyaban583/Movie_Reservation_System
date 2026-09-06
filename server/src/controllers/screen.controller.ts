@@ -27,7 +27,7 @@ export class ScreenController {
   async generateSeats(req: Request, res: Response) {
     try {
       const result = await screenService.generateSeats(
-        req.params.screenId,
+       String(req.params.screenId),
         Number(req.body.rows),
         Number(req.body.seatsPerRow)
       );
@@ -62,7 +62,7 @@ export class ScreenController {
   async getSeatsByScreen(req: Request, res: Response) {
     try {
       const seats = await screenService.getSeatsByScreen(
-        req.params.screenId
+        String(req.params.screenId)
       );
 
       return res.status(200).json({
@@ -98,7 +98,7 @@ export class ScreenController {
   async getSeatAvailabilityByShowtime(req: Request, res: Response) {
   try {
     const seats = await screenService.getSeatAvailabilityByShowtime(
-      req.params.showtimeId
+      String(req.params.showtimeId)
     );
 
     return res.status(200).json({

@@ -10,7 +10,7 @@ export class ReservationController {
       const validatedData = createReservationSchema.parse(req.body);
 
 const reservation = await reservationService.createReservation({
-  userId: req.user.userId,
+  userId: req.user!.userId,
   showtimeId: validatedData.showtimeId,
   seatIds: validatedData.seatIds,
 });
@@ -39,7 +39,7 @@ const reservation = await reservationService.createReservation({
   async getUserReservations(req: Request, res: Response) {
   try {
     const reservations = await reservationService.getUserReservations(
-      req.user.userId
+    req.user!.userId
     );
 
     return res.status(200).json({
@@ -58,8 +58,8 @@ const reservation = await reservationService.createReservation({
 async cancelReservation(req: Request, res: Response) {
   try {
     const reservation = await reservationService.cancelReservation(
-      req.params.id,
-      req.user.userId
+    String(req.params.id),
+req.user!.userId
     );
 
     return res.status(200).json({

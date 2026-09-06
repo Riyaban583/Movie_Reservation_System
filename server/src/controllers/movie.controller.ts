@@ -55,8 +55,7 @@ export class MovieController {
 
 async getMovieById(req: Request, res: Response) {
   try {
-    const movie = await movieService.getMovieById(req.params.id);
-
+    const movie = await movieService.getMovieById(String(req.params.id));
     if (!movie) {
       return res.status(404).json({
         success: false,
@@ -79,7 +78,7 @@ async getMovieById(req: Request, res: Response) {
 async updateMovie(req: Request, res: Response) {
   try {
     const movie = await movieService.updateMovie(
-      req.params.id,
+    String(req.params.id),
       req.body
     );
 
@@ -98,8 +97,7 @@ async updateMovie(req: Request, res: Response) {
 
 async deleteMovie(req: Request, res: Response) {
   try {
-    const movie = await movieService.deleteMovie(req.params.id);
-
+   const movie = await movieService.deleteMovie(String(req.params.id));
     return res.status(200).json({
       success: true,
       message: "Movie deleted successfully",

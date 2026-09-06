@@ -75,7 +75,7 @@ async getShowtimesByDate(req: Request, res: Response) {
 async updateShowtime(req: Request, res: Response) {
   try {
     const showtime = await showtimeService.updateShowtime(
-      req.params.id,
+     String(req.params.id),
       {
         movieId: req.body.movieId,
         screenId: req.body.screenId,
@@ -104,7 +104,7 @@ async updateShowtime(req: Request, res: Response) {
 async deleteShowtime(req: Request, res: Response) {
   try {
     const showtime = await showtimeService.deleteShowtime(
-      req.params.id
+     String(req.params.id)
     );
 
     return res.status(200).json({

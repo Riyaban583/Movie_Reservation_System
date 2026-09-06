@@ -43,7 +43,7 @@ export class TheaterController {
 
 async getTheaterById(req: Request, res: Response) {
   try {
-    const theater = await theaterService.getTheaterById(req.params.id);
+   const theater = await theaterService.getTheaterById(String(req.params.id));
 
     if (!theater) {
       return res.status(404).json({
@@ -67,7 +67,7 @@ async getTheaterById(req: Request, res: Response) {
 async updateTheater(req: Request, res: Response) {
   try {
     const theater = await theaterService.updateTheater(
-      req.params.id,
+      String(req.params.id),
       req.body
     );
 
@@ -86,8 +86,7 @@ async updateTheater(req: Request, res: Response) {
 
 async deleteTheater(req: Request, res: Response) {
   try {
-    const theater = await theaterService.deleteTheater(req.params.id);
-
+   const theater = await theaterService.deleteTheater(String(req.params.id));
     return res.status(200).json({
       success: true,
       message: "Theater deleted successfully",
