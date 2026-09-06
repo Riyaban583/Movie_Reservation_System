@@ -19,7 +19,7 @@ export default function TheatersPage() {
     const fetchTheaters = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/theaters"
+         `${process.env.NEXT_PUBLIC_API_URL}/api/theaters`,
         );
 
         const result = await response.json();

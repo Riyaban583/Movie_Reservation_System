@@ -57,13 +57,13 @@ export default function Home() {
 
         const [summaryResponse, occupancyResponse, trendsResponse] =
           await Promise.all([
-            fetch("http://localhost:5000/api/dashboard/summary", {
+            fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/summary`, {
               headers,
             }),
-            fetch("http://localhost:5000/api/dashboard/occupancy", {
+            fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/occupancy`, {
               headers,
             }),
-            fetch("http://localhost:5000/api/dashboard/booking-trends", {
+            fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/booking-trends`, {
               headers,
             }),
           ]);

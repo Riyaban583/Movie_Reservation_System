@@ -33,7 +33,7 @@ export default function BookingsPage() {
         }
 
         const response = await fetch(
-          "http://localhost:5000/api/reservations/my",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/reservations/my`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

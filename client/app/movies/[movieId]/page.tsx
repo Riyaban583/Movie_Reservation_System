@@ -37,8 +37,10 @@ export default function MovieDetailsPage() {
     const fetchMovieData = async () => {
       try {
         const [movieResponse, showtimeResponse] = await Promise.all([
-          fetch(`http://localhost:5000/api/movies/${movieId}`),
-          fetch(`http://localhost:5000/api/showtimes?movieId=${movieId}`),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/movies/${movieId}`),
+          fetch(
+  `${process.env.NEXT_PUBLIC_API_URL}/api/showtimes?movieId=${movieId}`
+),
         ]);
 
         if (!movieResponse.ok) {

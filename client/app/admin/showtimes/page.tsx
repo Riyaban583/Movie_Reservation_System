@@ -19,7 +19,7 @@ export default function ShowtimesPage() {
     const fetchShowtimes = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/showtimes"
+         `${process.env.NEXT_PUBLIC_API_URL}/api/showtimes`,
         );
 
         const result = await response.json();

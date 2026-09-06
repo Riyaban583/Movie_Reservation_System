@@ -28,8 +28,7 @@ const moviesPerPage = 6;
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/movies");
-
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/movies`)
         if (!response.ok) {
           throw new Error("Failed to fetch movies");
         }

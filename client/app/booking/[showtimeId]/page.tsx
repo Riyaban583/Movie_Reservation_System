@@ -27,7 +27,7 @@ const [confirmation, setConfirmation] = useState<any>(null);
   const fetchSeats = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/screens/showtime/${showtimeId}/seats`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/screens/showtime/${showtimeId}/seats`
       );
 
       if (!response.ok) {
@@ -102,20 +102,20 @@ const [confirmation, setConfirmation] = useState<any>(null);
       return;
     }
 
-    const response = await fetch(
-      "http://localhost:5000/api/reservations",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          showtimeId,
-          seatIds: selectedSeats,
-        }),
-      }
-    );
+const response = await fetch(
+  `${process.env.NEXT_PUBLIC_API_URL}/api/reservations`,
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      showtimeId,
+      seatIds: selectedSeats,
+    }),
+  }
+);
 
     const result = await response.json();
 
