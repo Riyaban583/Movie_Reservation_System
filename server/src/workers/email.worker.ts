@@ -2,8 +2,7 @@ import { Worker } from "bullmq";
 import transporter from "../lib/mailer";
 
 const connection = {
-  host: "localhost",
-  port: 6379,
+  url: process.env.REDIS_URL || "redis://localhost:6379",
 };
 
 const emailWorker = new Worker(
