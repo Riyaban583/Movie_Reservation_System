@@ -1,5 +1,6 @@
-import app from "./app";
 import "./config/env";
+
+import app from "./app";
 import "./lib/queue";
 import "./workers/email.worker";
 
