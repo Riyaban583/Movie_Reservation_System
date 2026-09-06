@@ -1,11 +1,11 @@
 import { Queue } from "bullmq";
 
-const connection = {
-  url: process.env.REDIS_URL || "redis://localhost:6379",
-};
+const redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
 
 export const emailQueue = new Queue("emailQueue", {
-  connection,
+  connection: {
+    url: redisUrl,
+  },
 });
 
 export async function addTestEmailJob() {
