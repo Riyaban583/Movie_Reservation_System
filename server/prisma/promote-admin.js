@@ -8,24 +8,34 @@ async function main() {
   const password = process.env.ADMIN_PASSWORD;
 
   if (!email || !password) {
-    throw new Error(
-      "ADMIN_EMAIL and ADMIN_PASSWORD environment variables are required"
-    );
+    throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD are required");
   }
+
+  console.log("Checking admin account...");
 
   const existingUser = await prisma.user.findUnique({
     where: { email },
   });
 
   if (existingUser) {
-    const user = await prisma.user.update({
-      where: { email },
-      data: { role: "ADMIN" },
-    });
+    console.log(`Found user: ${existingUser.email}`);
+    console.log(`Current role: ${existingUser.role}`);
 
-    console.log(`✅ Existing user promoted to ADMIN: ${user.email}`);
+    if (existingUser.role !== "ADMIN") {
+      await prisma.user.update({
+        where: { email },
+        data: { role: "ADMIN" },
+      });
+
+      console.log("✅ Existing user promoted to ADMIN");
+    } else {
+      console.log("✅ User is already ADMIN");
+    }
+
     return;
   }
+
+  console.log("User not found. Creating new ADMIN user...");
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
