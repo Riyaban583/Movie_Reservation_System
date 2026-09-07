@@ -32,15 +32,20 @@ const allowedOrigins = [
   process.env.PRODUCTION_CLIENT_URL,
 ].filter(Boolean);
 
+console.log("Allowed CORS origins:", allowedOrigins);
+
 app.use(
   cors({
     origin: (origin, callback) => {
+      console.log("Incoming request origin:", origin);
+
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
         return;
       }
 
-      callback(new Error("Not allowed by CORS"));
+      console.error("CORS blocked origin:", origin);
+      callback(null, false);
     },
     credentials: true,
   })
