@@ -39,8 +39,8 @@ const reservation = await prisma.$transaction(async (tx) => {
     data: {
       userId: data.userId,
       showtimeId: data.showtimeId,
-      status: "HELD",
-      expiresAt: new Date(Date.now() + 10 * 60 * 1000),
+      status: "CONFIRMED",
+expiresAt: null,
       seats: {
         create: data.seatIds.map((seatId) => ({
           seatId,
