@@ -11,10 +11,12 @@ const swaggerOptions: swaggerJSDoc.Options = {
     },
 
     servers: [
-      {
-        url: "http://localhost:5000",
-      },
-    ],
+  {
+    url:
+      process.env.PRODUCTION_API_URL ||
+      "http://localhost:5000",
+  },
+],
 
     components: {
       securitySchemes: {
