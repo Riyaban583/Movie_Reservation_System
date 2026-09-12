@@ -2,78 +2,256 @@
 
 # 🎬 Movie Reservation System
 
-A full-stack, production-oriented **Movie Reservation System** built with **Node.js, Express.js, TypeScript, PostgreSQL, Prisma ORM, and JWT Authentication**.
+**A full-stack, production-oriented movie ticket booking platform**
 
-Designed with a scalable **MVC architecture** and secure coding practices, this project lets users browse movies, manage bookings or seats , and (soon) reserve seats in real time — with an admin layer for full control over content and shows.
+Built with Next.js, Node.js, Express.js, TypeScript, PostgreSQL, Prisma ORM, JWT, Redis, BullMQ, and Socket.IO.
 
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white)](https://redis.io/)
+[![Socket.IO](https://img.shields.io/badge/Socket.IO-010101?style=flat-square&logo=socket.io&logoColor=white)](https://socket.io/)
+[![Deployed on Render](https://img.shields.io/badge/Deployed%20on-Render-46E3B7?style=flat-square&logo=render&logoColor=white)](https://render.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](#-license)
 
-[Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#️-getting-started) • [API Reference](#-api-reference) • [Roadmap](#-roadmap) • [Contributing](#-contributing)
+[Live Demo](#-live-application) · [Features](#-features) · [Architecture](#%EF%B8%8F-architecture) · [Setup](#%EF%B8%8F-local-setup) · [API Docs](#-api-documentation)
 
 </div>
 
 ---
 
-## 📖 About the Project
+## 📑 Table of Contents
 
-The **Movie Reservation System** is a backend-first application that simulates a real-world ticket booking platform — similar to BookMyShow or Fandango. It's built to demonstrate clean backend architecture, secure authentication, and relational data modeling using modern TypeScript tooling.
+- [Live Application](#-live-application)
+- [Features](#-features)
+- [Tech Stack](#%EF%B8%8F-tech-stack)
+- [Architecture](#%EF%B8%8F-architecture)
+- [System Flow Diagram](#-system-flow-diagram)
+- [Database Schema (ER Diagram)](#-database-schema-er-diagram)
+- [Project Structure](#-project-structure)
+- [Local Setup](#%EF%B8%8F-local-setup)
+- [Environment Variables](#-environment-variables)
+- [Booking Flow](#%EF%B8%8F-booking-flow)
+- [Testing](#-testing)
+- [API Documentation](#-api-documentation)
+- [Production Security Verification](#%EF%B8%8F-production-security-verification)
+- [Deployment](#-deployment)
+- [Project Status](#-project-status)
+- [Author](#-author)
+- [Project Highlights](#-project-highlights)
 
-The project is under **active development**, with authentication fully implemented and movie/booking modules currently in progress.
+---
+
+## 🚀 Live Application
+
+| Resource | Link |
+|---|---|
+| 🌐 Frontend | [movie-reservation-system-1-w2vm.onrender.com](https://movie-reservation-system-1-w2vm.onrender.com) |
+| 🔧 Backend API | [movie-reservation-system-yq1d.onrender.com](https://movie-reservation-system-yq1d.onrender.com) |
+| 📘 Swagger API Docs | [movie-reservation-system-yq1d.onrender.com/api-docs](https://movie-reservation-system-yq1d.onrender.com/api-docs) |
 
 ---
 
 ## ✨ Features
 
-### ✅ Authentication
-- User registration & login
-- Password hashing with **bcrypt**
-- **JWT**-based authentication
-- Protected route middleware
-- Role-based authorization *(in progress)*
+### 🔐 Authentication & Authorization
+- User registration and login
+- Password hashing with bcrypt
+- JWT-based authentication
+- Protected routes
+- Role-based access control (`USER` / `ADMIN`)
+- User profile and booking history
 
 ### 🎥 Movies
-- Add / update / delete movies *(admin)*
-- Fetch all movies
-- Fetch single movie details
+- Browse movies
+- Movie details
+- Search and genre filtering
+- Date-based filtering
+- Pagination
+- Admin movie CRUD
 
-### 🎟 Booking
-- Book movie tickets
-- Cancel a booking
-- View booking history
-- Seat availability check
-- Real-time seat locking *(planned)*
+### 🏢 Theater, Screen & Seat Management
+- Theater management
+- Screen management
+- Automatic seat generation
+- Seat availability by showtime
+- Admin controls for theaters, screens, and seats
 
-### 👤 User
-- View & update profile
-- Get current logged-in user
-- View personal booking history
+### 🎟️ Showtime & Reservations
+- Date/time-based show scheduling
+- Interactive seat selection
+- Reservation creation
+- Reservation cancellation
+- Booking history
+- Confirmed booking flow
+- QR-based booking confirmation
+- Transaction-based seat booking
+- Database constraints to prevent double booking / overbooking
 
-### 🔐 Security
-- Bcrypt password hashing
-- JWT token-based auth
-- Environment-based secrets 
-- Route-level protection
-- MVC separation of concerns of seats
+### ⚡ Real-Time & Background Processing
+- Redis integration
+- BullMQ background jobs
+- Socket.IO real-time communication
+- Email notification workflow
+- Queue-based asynchronous processing
+
+### 🛡️ Security
+- Helmet security headers
+- CORS allowlist for frontend origins
+- API rate limiting
+- JWT route protection
+- bcrypt password hashing
+- Environment-based configuration
+- Express error handling
+- Request validation with Zod
+
+### 📊 Admin Dashboard
+- Admin dashboard
+- Movie management
+- Theater management
+- Screen and seat management
+- Showtime management
+- Revenue analytics
 
 ---
 
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
 
 | Layer | Technology |
 |---|---|
-| **Runtime** | Node.js |
-| **Framework** | Express.js |
-| **Language** | TypeScript |
-| **Database** | PostgreSQL |
-| **ORM** | Prisma |
-| **Auth** | JWT + bcrypt |
-| **API Testing** | Postman / Thunder Client |
-| **Version Control** | Git & GitHub |
+| Frontend | Next.js |
+| Backend | Node.js, Express.js |
+| Language | TypeScript |
+| Database | PostgreSQL |
+| ORM | Prisma |
+| Authentication | JWT + bcrypt |
+| Validation | Zod |
+| Cache / Data Store | Redis |
+| Background Jobs | BullMQ |
+| Real-Time | Socket.IO |
+| Email | Nodemailer |
+| QR Code | QR generation library |
+| API Documentation | Swagger / OpenAPI |
+| Testing | Jest + Supertest |
+| Deployment | Render |
+| Version Control | Git + GitHub |
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart TD
+    A[Next.js Frontend] -->|REST API| B[Express / Node.js]
+    B --> C[Security Middleware<br/>CORS · Helmet · Rate Limit · JWT]
+    C --> D[Routes]
+    D --> E[Controllers]
+    E --> F[Services]
+    F --> G[Prisma ORM]
+    G --> H[(PostgreSQL)]
+
+    F --> I[(Redis)]
+    F --> J[BullMQ Jobs]
+    F --> K[Socket.IO]
+
+    I --> L[Email / QR Workflow]
+    J --> L
+    K --> L
+
+    style A fill:#000,color:#fff
+    style H fill:#4169E1,color:#fff
+    style I fill:#DC382D,color:#fff
+    style K fill:#010101,color:#fff
+```
+
+---
+
+## 🔄 System Flow Diagram
+
+```mermaid
+sequenceDiagram
+    actor U as User
+    participant FE as Next.js Frontend
+    participant API as Express API
+    participant DB as PostgreSQL
+    participant R as Redis / BullMQ
+    participant WS as Socket.IO
+
+    U->>FE: Browse movies & select showtime
+    FE->>API: GET /api/showtimes
+    API->>DB: Query seat availability
+    DB-->>API: Seat map
+    API-->>FE: Available seats
+
+    U->>FE: Select seats & confirm booking
+    FE->>API: POST /api/reservations
+    API->>DB: Begin transaction (lock seats)
+    DB-->>API: Reservation confirmed
+    API->>R: Queue email + QR job
+    API->>WS: Emit seat-status update
+    WS-->>FE: Real-time seat lock broadcast
+    R-->>U: Email with QR confirmation
+    API-->>FE: Booking success
+```
+
+---
+
+## 🗄️ Database Schema (ER Diagram)
+
+```mermaid
+erDiagram
+    USER ||--o{ RESERVATION : makes
+    THEATER ||--o{ SCREEN : contains
+    SCREEN ||--o{ SEAT : contains
+    SCREEN ||--o{ SHOWTIME : hosts
+    MOVIE ||--o{ SHOWTIME : "scheduled as"
+    SHOWTIME ||--o{ RESERVATION : "booked for"
+    SEAT ||--o{ RESERVATION : "reserved in"
+
+    USER {
+        string id PK
+        string email
+        string password
+        string role
+    }
+    MOVIE {
+        string id PK
+        string title
+        string genre
+        int duration
+    }
+    THEATER {
+        string id PK
+        string name
+        string location
+    }
+    SCREEN {
+        string id PK
+        string theaterId FK
+        string name
+    }
+    SEAT {
+        string id PK
+        string screenId FK
+        string seatNumber
+    }
+    SHOWTIME {
+        string id PK
+        string movieId FK
+        string screenId FK
+        datetime startTime
+    }
+    RESERVATION {
+        string id PK
+        string userId FK
+        string showtimeId FK
+        string seatId FK
+        string status
+    }
+```
 
 ---
 
@@ -82,255 +260,237 @@ The project is under **active development**, with authentication fully implement
 ```
 Movie_Reservation/
 │
-├── client/                    # Frontend (planned)
+├── client/                         # Next.js frontend
+│   ├── app/                        # Pages / routes / UI
+│   ├── components/                 # Reusable UI components
+│   └── ...
 │
-└── server/
-    │
-    ├── prisma/
-    │   ├── migrations/        # Database migrations
-    │   └── schema.prisma      # Prisma schema definition
-    │
-    ├── src/
-    │   ├── controllers/       # Request handlers
-    │   ├── services/          # Business logic
-    │   ├── routes/            # API route definitions
-    │   ├── middlewares/       # Auth, error handling, etc.
-    │   ├── lib/                # Shared utilities/helpers
-    │   ├── validations/       # Request validation schemas
-    │   ├── app.ts             # Express app configuration
-    │   └── server.ts          # Entry point
-    │
-    ├── .env                   # Environment variables
-    ├── package.json
-    └── tsconfig.json
+├── server/                         # Express + TypeScript backend
+│   ├── prisma/
+│   │   ├── migrations/
+│   │   └── schema.prisma
+│   │
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── services/
+│   │   ├── routes/
+│   │   ├── middlewares/
+│   │   ├── validations/
+│   │   ├── lib/
+│   │   ├── config/
+│   │   ├── workers/
+│   │   ├── __tests__/
+│   │   ├── app.ts
+│   │   └── server.ts
+│   │
+│   ├── .env.example
+│   ├── package.json
+│   └── tsconfig.json
+│
+├── docs/
+├── .gitignore
+├── package.json
+└── README.md
 ```
 
 ---
 
-## ⚙️ Getting Started
+## ⚙️ Local Setup
 
 ### Prerequisites
-- Node.js (v18+ recommended)
-- PostgreSQL installed and running
-- npm or yarn
+- Node.js 18+
+- PostgreSQL
+- Redis
+- npm
 
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/Riyaban583/Movie_Reservation_System.git
+cd Movie_Reservation_System
 ```
 
-### 2. Navigate to the server directory
+### 2. Backend setup
 ```bash
-cd Movie_Reservation/server
-```
-
-### 3. Install dependencies
-```bash
+cd server
 npm install
 ```
+Create `server/.env` using the required variables from `server/.env.example`.
 
-### 4. Configure environment variables
-Create a `.env` file in the `server/` directory:
-
-```env
-PORT=5000
-
-DATABASE_URL="your_database_url"
-JWT_SECRET="your_secret"
-JWT_EXPIRES_IN="7d"
-
-BCRYPT_SALT_ROUNDS=10
-```
-
-> ⚠️ **Never commit your `.env` file.** Add it to `.gitignore` and use `.env.example` to share the required keys with collaborators.
-
-### 5. Generate the Prisma Client
+### 3. Generate Prisma Client
 ```bash
 npx prisma generate
 ```
 
-### 6. Run database migrations
+### 4. Run migrations
 ```bash
 npx prisma migrate dev
 ```
 
-### 7. Start the development server
+### 5. Start backend
 ```bash
 npm run dev
 ```
 
-The API will be running at `http://localhost:5000` 🚀
-
----
-
-## 📡 API Reference
-
-### 🔑 Authentication
-
-<details>
-<summary><strong>POST /api/auth/signup</strong> — Register a new user</summary>
-
-**Request Body**
-```json
-{
-  "name": "Riya",
-  "email": "riya@gmail.com",
-  "password": "123456"
-}
-```
-</details>
-
-<details>
-<summary><strong>POST /api/auth/login</strong> — Log in an existing user</summary>
-
-**Request Body**
-```json
-{
-  "email": "riya@gmail.com",
-  "password": "123456"
-}
-```
-
-**Response**
-```json
-{
-  "success": true,
-  "data": {
-    "user": {},
-    "token": "JWT_TOKEN"
-  }
-}
-```
-</details>
-
-<details>
-<summary><strong>GET /api/auth/profile</strong> — Get the current logged-in user</summary>
-
-**Headers**
-```
-Authorization: Bearer YOUR_JWT_TOKEN
-```
-</details>
-
-> More endpoints (Movies, Bookings, Users) will be documented here as they are implemented.
-
----
-
-## 🔒 Authentication Flow
-
-```
- User Login
-     │
-     ▼
- Check Email Exists
-     │
-     ▼
- Compare Password (bcrypt)
-     │
-     ▼
- Generate JWT Token
-     │
-     ▼
- Return Token to Client
-     │
-     ▼
- Access Protected Routes
+### 6. Frontend setup
+From the project root:
+```bash
+cd client
+npm install
+npm run dev
 ```
 
 ---
 
-## 🗄 Database Schema
+## 🔐 Environment Variables
 
-### User
+> ⚠️ Do not commit real environment values. Use `.env.example` as the template.
 
-| Field | Type | Description |
-|---|---|---|
-| `id` | String | Unique identifier (UUID) |
-| `name` | String | Full name of the user |
-| `email` | String | Unique email address |
-| `password` | String | Hashed password |
-| `role` | String | `USER` or `ADMIN` |
-| `createdAt` | DateTime | Record creation timestamp |
-| `updatedAt` | DateTime | Last update timestamp |
+Typical backend configuration includes:
 
-> Additional models (`Movie`, `Booking`, `Theatre`, `Show`, `Seat`) are planned as the project evolves.
+```env
+PORT=5000
+DATABASE_URL="your_database_url"
+JWT_SECRET="your_secret"
+JWT_EXPIRES_IN="7d"
+REDIS_URL="your_redis_url"
+CLIENT_URL="http://localhost:3000"
+PRODUCTION_CLIENT_URL="your_production_frontend_url"
+PRODUCTION_API_URL="your_production_backend_url"
+```
 
 ---
 
-## 📊 Project Status
+## 🎟️ Booking Flow
+
+```mermaid
+flowchart LR
+    A[Select Movie] --> B[Select Date & Showtime]
+    B --> C[Fetch Seat Availability]
+    C --> D[Select Available Seats]
+    D --> E[Reservation Request]
+    E --> F[Database Transaction]
+    F --> G[Unique Seat / Reservation Constraints]
+    G --> H[Reservation Confirmed]
+    H --> I[QR Confirmation + Notification]
+    I --> J[Visible in My Bookings]
+```
+
+The reservation logic uses **database transactions and constraints** so concurrent requests cannot successfully reserve the same seat for the same showtime.
+
+---
+
+## 🧪 Testing
+
+Run all backend tests:
+```bash
+cd server
+npm test -- --runInBand
+```
+
+For open-handle diagnostics:
+```bash
+npm test -- --runInBand --detectOpenHandles
+```
+
+Current test suite includes movie and reservation tests, and the final test run completed with both suites passing.
+
+---
+
+## 📡 API Documentation
+
+Swagger / OpenAPI documentation is available at:
+👉 **https://movie-reservation-system-yq1d.onrender.com/api-docs**
+
+Main API groups include:
+
+| Endpoint | Description |
+|---|---|
+| `/api/auth` | Authentication & authorization |
+| `/api/movies` | Movie browsing & admin CRUD |
+| `/api/theaters` | Theater management |
+| `/api/screens` | Screen management |
+| `/api/showtimes` | Showtime scheduling |
+| `/api/reservations` | Seat reservation & booking |
+| `/api/dashboard` | Admin analytics dashboard |
+
+---
+
+## 🛡️ Production Security Verification
+
+The deployed backend has been verified for:
+
+- ✅ Helmet security headers
+- ✅ Production CORS allowlist
+- ✅ Rejection of unknown CORS origins
+- ✅ Rate limiting (100 requests per 15 minutes)
+- ✅ JWT authentication and role-based access
+- ✅ Environment-based secrets
+
+---
+
+## 🚀 Deployment
+
+The production frontend and backend are deployed on **Render**.
+
+Production setup includes:
+- Render PostgreSQL
+- Render Redis
+- Prisma migrations during deployment
+- Production CORS configuration
+- Environment variables managed through the hosting platform
+- Swagger exposed through the deployed API
+
+---
+
+## 📌 Project Status
 
 | Module | Status |
 |---|---|
-| Express Setup | ✅ Done |
-| PostgreSQL Integration | ✅ Done |
-| Prisma ORM | ✅ Done |
-| Authentication (JWT + bcrypt) | ✅ Done |
-| Protected Routes | ✅ Done |
-| Role-Based Access Control | 🚧 In Progress |
-| Movies CRUD | 🚧 In Progress |
-| Booking System | 🚧 In Progress |
-| Seat Locking | 📌 Planned |
-| Payment Integration | 📌 Planned |
-
-**Legend:** ✅ Complete &nbsp;|&nbsp; 🚧 In Progress &nbsp;|&nbsp; 📌 Planned
-
----
-
-## 🗺 Roadmap
-
-- [ ] Role-Based Access Control (RBAC)
-- [ ] Admin dashboard APIs
-- [ ] Movie CRUD (full)
-- [ ] Theatre & show management
-- [ ] Seat management & real-time locking
-- [ ] Complete booking system
-- [ ] Payment gateway integration
-- [ ] Email notifications
-- [ ] Ticket download (PDF)
-- [ ] Movie poster upload via Cloudinary
-- [ ] Frontend client (React)
+| Backend API | ✅ Complete |
+| PostgreSQL + Prisma | ✅ Complete |
+| JWT Authentication | ✅ Complete |
+| RBAC | ✅ Complete |
+| Movie Management | ✅ Complete |
+| Theater / Screen / Seat Management | ✅ Complete |
+| Showtime Scheduling | ✅ Complete |
+| Reservation Engine | ✅ Complete |
+| Anti-Overbooking | ✅ Complete |
+| Redis | ✅ Complete |
+| BullMQ | ✅ Complete |
+| Socket.IO | ✅ Complete |
+| Email / QR Workflow | ✅ Complete |
+| Admin Dashboard / Analytics | ✅ Complete |
+| Next.js Frontend | ✅ Complete |
+| Swagger / OpenAPI | ✅ Complete |
+| Automated Tests | ✅ Complete |
+| Production Deployment | ✅ Complete |
 
 ---
 
-## 🧠 Concepts & Practices Used
-
-`MVC Architecture` · `Express Routing` · `Controllers & Services Pattern` · `Prisma ORM` · `PostgreSQL` · `JWT Authentication` · `bcrypt Hashing` · `Custom Middleware` · `Protected Routes` · `Environment Configuration`
-
----
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!
-
-1. **Fork** the repository
-2. **Create** a feature branch
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. **Commit** your changes
-   ```bash
-   git commit -m "Add: your feature description"
-   ```
-4. **Push** to your branch
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-5. **Open** a Pull Request
-
----
-
-## 👨‍💻 Author
+## 👩‍💻 Author
 
 **Riya Bansal**
+GitHub: [@Riyaban583](https://github.com/Riyaban583)
 
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Riyaban583)
+---
+
+## ⭐ Project Highlights
+
+This project demonstrates:
+- Modular MVC backend design
+- Secure authentication and authorization
+- Relational data modeling with Prisma and PostgreSQL
+- Transaction-safe reservation handling
+- Anti-overbooking design
+- Caching and background processing
+- Real-time communication
+- API documentation and automated testing
+- Production deployment and security hardening
 
 ---
 
 <div align="center">
 
-### ⭐ Show your support
-
-If you found this project useful or interesting, consider giving it a **star** on GitHub — it helps a lot!
+Made with ❤️ using Next.js, Node.js, and PostgreSQL
 
 </div>
