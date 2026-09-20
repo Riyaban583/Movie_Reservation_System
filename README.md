@@ -490,7 +490,12 @@ This project demonstrates:
 ---
 
 <div align="center">
-
+🚀 Unique Selling Points
+->Concurrency-Safe Booking: Uses PostgreSQL transactions and unique constraints to prevent duplicate seat reservations and overbooking.
+->Smart Seat Recommendation: Recommends suitable available seats based on user preferences such as seat position, number of seats, and budget.
+->Intelligent Waitlist System: Allows users to join sold-out shows and sends real-time/email notifications when seats become available.
+->Real-Time Booking Updates: Uses Socket.IO to synchronize seat and reservation status across connected users.
+->Asynchronous Processing: Uses Redis and BullMQ for background jobs such as notifications and reservation-related processing.
 Made with ❤️ using Next.js, Node.js, and PostgreSQL
 
 </div>
