@@ -96,7 +96,7 @@ Built with Next.js, Node.js, Express.js, TypeScript, PostgreSQL, Prisma ORM, JWT
 - BullMQ background jobs
 - Socket.IO real-time communication
 - Email notification workflow
-- Queue-based asynchronous processing
+- Queue-based asynchronous processing device
 
 ### 🛡️ Security
 - Helmet security headers
