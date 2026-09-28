@@ -71,7 +71,7 @@ Built with Next.js, Node.js, Express.js, TypeScript, PostgreSQL, Prisma ORM, JWT
 - Search and genre filtering
 - Date-based filtering
 - Pagination
-- Admin movie CRUD
+- Admin movie CRUD system
 
 ### 🏢 Theater, Screen & Seat Management
 - Theater management
