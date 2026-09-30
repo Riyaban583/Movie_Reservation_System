@@ -389,7 +389,7 @@ npm test -- --runInBand
 
 For open-handle diagnostics:
 ```bash
-npm test -- --runInBand --detectOpenHandles
+npm test -- --runInBand --detectOpenHandle
 ```
 
 Current test suite includes movie and reservation tests, and the final test run completed with both suites passing.
