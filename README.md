@@ -70,12 +70,12 @@ Built with Next.js, Node.js, Express.js, TypeScript, PostgreSQL, Prisma ORM, JWT
 - Movie details
 - Search and genre filtering
 - Date-based filtering
-- Pagination
+- Pagination 
 - Admin movie CRUD system
 
 ### 🏢 Theater, Screen & Seat Management
 - Theater management
-- Screen management
+- Screen management system
 - Automatic seat generation
 - Seat availability by showtime
 - Admin controls for theaters, screens, and seats
