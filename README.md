@@ -99,7 +99,7 @@ Built with Next.js, Node.js, Express.js, TypeScript, PostgreSQL, Prisma ORM, JWT
 - Queue-based asynchronous processing device
 
 ### 🛡️ Security
-- Helmet security headers
+- Helmet security header
 - CORS allowlist for frontend origins
 - API rate limiting
 - JWT route protection
