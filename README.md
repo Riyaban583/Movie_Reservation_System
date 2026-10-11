@@ -437,7 +437,7 @@ Production setup includes:
 - Render Redis
 - Prisma migrations during deployment
 - Production CORS configuration
-- Environment variables managed through the hosting platform
+- Environment variables managed through the hosting platforms
 - Swagger exposed through the deployed API
 
 ---
