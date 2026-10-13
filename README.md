@@ -219,7 +219,7 @@ erDiagram
     }
     MOVIE {
         string id PK
-        string title
+        string titles
         string genre
         int duration
     }
