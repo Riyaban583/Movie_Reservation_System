@@ -203,7 +203,7 @@ sequenceDiagram
 
 ```mermaid
 erDiagram
-    USER ||--o{ RESERVATION : makes
+    USER ||--o{ RESERVATION : make
     THEATER ||--o{ SCREEN : contains
     SCREEN ||--o{ SEAT : contains
     SCREEN ||--o{ SHOWTIME : hosts
