@@ -89,7 +89,7 @@ Built with Next.js, Node.js, Express.js, TypeScript, PostgreSQL, Prisma ORM, JWT
 - Confirmed booking flow
 - QR-based booking confirmation
 - Transaction-based seat booking
-- Database constraints to prevent double booking / overbooking
+- Database constraints to prevent double booking / overbookings
 
 ### ⚡ Real-Time & Background Processing
 - Redis integration
