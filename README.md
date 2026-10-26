@@ -51,7 +51,7 @@ Built with Next.js, Node.js, Express.js, TypeScript, PostgreSQL, Prisma ORM, JWT
 |---|---|
 | 🌐 Frontend | [movie-reservation-system-1-w2vm.onrender.com](https://movie-reservation-system-1-w2vm.onrender.com) |
 | 🔧 Backend API | [movie-reservation-system-yq1d.onrender.com](https://movie-reservation-system-yq1d.onrender.com) |
-| 📘 Swagger API Docs | [movie-reservation-system-yq1d.onrender.com/api-docs](https://movie-reservation-system-yq1d.onrender.com/api-docs) |
+| 📘 Swagger APIs  Docs | [movie-reservation-system-yq1d.onrender.com/api-docs](https://movie-reservation-system-yq1d.onrender.com/api-docs) |
 
 ---
 
