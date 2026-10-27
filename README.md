@@ -480,7 +480,7 @@ This project demonstrates:
 - Modular MVC backend design
 - Secure authentication and authorization
 - Relational data modeling with Prisma and PostgreSQL
-- Transaction-safe reservation handling
+- Transaction-safe reservations handling
 - Anti-overbooking design
 - Caching and background processing
 - Real-time communication
