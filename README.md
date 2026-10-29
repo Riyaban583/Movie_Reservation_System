@@ -95,7 +95,7 @@ Built with Next.js, Node.js, Express.js, TypeScript, PostgreSQL, Prisma ORM, JWT
 - Redis integration
 - BullMQ background jobs
 - Socket.IO real-time communication
-- Email notification workflow
+- Email notification workflows
 - Queue-based asynchronous processing devices
 
 ### 🛡️ Security
